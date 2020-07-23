@@ -1,0 +1,7 @@
+CREATE TABLE tb_item
+(
+    id INT(11) PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255),
+    content VARCHAR(2048) DEFAULT NULL,
+    last_generate DATETIME
+) ENGINE=InnoDB,CHARSET=UTF8;
