@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import wang.ismy.htmlcachesystem.dao.ConfigDao;
 import wang.ismy.htmlcachesystem.dao.ItemDao;
 import wang.ismy.htmlcachesystem.entity.Item;
 
@@ -29,6 +30,9 @@ public class ItemService {
     @Autowired
     ItemDao itemDao;
 
+    @Autowired
+    ConfigDao configDao;
+
     @Value("${config.html-location}")
     String htmlLocation;
 
@@ -38,7 +42,7 @@ public class ItemService {
             if (item == null){
                 return false;
             }
-            Template template = configurer.getConfiguration().getTemplate("./item-template.ftl");
+            Template template = new Template("template",configDao.get("template"),configurer.getConfiguration());
             String s = FreeMarkerTemplateUtils.processTemplateIntoString(template, Map.of("item",item));
             File file = new File(htmlLocation + id + ".html");
             FileOutputStream fos = new FileOutputStream(file);
