@@ -6,7 +6,7 @@
 <meta name="viewport"
 	content="user-scalable=no, width=device-width, minimum-scale=1, maximum-scale=1">
 
-<title>静态文件列表</title>
+<title>健康检查</title>
 
 	<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://www.layuicdn.com/layui-v2.5.6/css/layui.css" rel="stylesheet">
@@ -38,20 +38,19 @@
 	</header>
 
 	<div class="content why-hilo">
-		<a href="/generateAll" class="btn">批量生成</a>
+
 		<table class="table">
 			<tr>
-				<td>ID</td>
-				<td>标题</td>
+				<td>IP</td>
+				<td>状态</td>
 			</tr>
-			<#list items as item>
+			<#list map?keys as key>
 				<tr>
-					<td>${item.id}</td>
-					<td>${item.title}</td>
 					<td>
-						<button class="btn" onclick="location.href = 'view?id=${item.id}'">动态预览</button>
-						<button class="btn" onclick="location.href='//127.0.0.1:9090/${item.id}.html'">查看静态文件</button>
-						<button class="btn" onclick="generateHtml(${item.id})">生成静态文件</button>
+						${key}
+					</td>
+					<td>
+						${map[key]}
 					</td>
 				</tr>
 			</#list>
