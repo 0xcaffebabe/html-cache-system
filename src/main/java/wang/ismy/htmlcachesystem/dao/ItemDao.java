@@ -19,4 +19,6 @@ public interface ItemDao {
     List<Item> selectAll();
 
     int insert(Item item);
+
+    Item selectById(Long id);
 }

@@ -6,11 +6,11 @@
 <meta name="viewport"
 	content="user-scalable=no, width=device-width, minimum-scale=1, maximum-scale=1">
 
-<title>添加item</title>
+<title>静态文件列表</title>
 
 	<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://www.layuicdn.com/layui-v2.5.6/css/layui.css" rel="stylesheet">
-<link href="css/home.css" rel="stylesheet">
+<link href="./css/home.css" rel="stylesheet">
 <style type="text/css">
 .wa {
 	width: 100%;
@@ -38,11 +38,24 @@
 	</header>
 
 	<div class="content why-hilo">
-		<h2>添加item</h2>
-		商品名称 <input type="text" id="title">
-		<div id="editor" style="padding: 20px"></div>
-		<button id="submit">提交</button>
 
+		<table class="table">
+			<tr>
+				<td>ID</td>
+				<td>标题</td>
+			</tr>
+			<#list items as item>
+				<tr>
+					<td>${item.id}</td>
+					<td>${item.title}</td>
+					<td>
+						<button class="btn" onclick="location.href = 'view?id=${item.id}'">动态预览</button>
+						<button class="btn" onclick="location.href='//127.0.0.1:9090/${item.id}.html'">查看静态文件</button>
+						<button class="btn" onclick="generateHtml(${item.id})">生成静态文件</button>
+					</td>
+				</tr>
+			</#list>
+		</table>
 		</p>
 		<div style="text-align: -webkit-center;">
 
@@ -54,17 +67,12 @@
 	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
 	<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script src="https://www.layuicdn.com/layui-v2.5.6/layui.js"></script>
-	<script src="//unpkg.com/wangeditor/release/wangEditor.min.js"></script>
 	<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.20.0-0/axios.js"></script>
 	<script>
-		let E = window.wangEditor
-		let editor2 = new E('#editor')
-		editor2.create()
-		console.log(editor2)
-		let title = document.querySelector('#title').value
-		document.querySelector("#submit").onclick = function(){
-			axios.post(`/item?title=${title}`,{
-				data: editor2.txt.html()
+		function generateHtml(id){
+			axios.post('generate/'+id)
+			.then(res =>{
+				alert(res.data);
 			})
 		}
 	</script>

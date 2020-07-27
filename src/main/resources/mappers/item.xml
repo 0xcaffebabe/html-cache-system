@@ -9,4 +9,7 @@
     <select id="selectAll" resultType="wang.ismy.htmlcachesystem.entity.Item">
         SELECT * FROM tb_item
     </select>
+    <select id="selectById" resultType="wang.ismy.htmlcachesystem.entity.Item">
+        SELECT * FROM tb_item WHERE id = #{id}
+    </select>
 </mapper>
