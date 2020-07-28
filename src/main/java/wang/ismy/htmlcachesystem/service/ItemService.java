@@ -93,4 +93,10 @@ public class ItemService {
     public int update(Item item) {
         return itemDao.update(item);
     }
+
+    public List<Item> checkFile(){
+        var items = itemDao.selectAll();
+        items.removeIf(item -> new File(htmlLocation + item.getId() + ".html").exists());
+        return items;
+    }
 }

@@ -9,6 +9,8 @@ import wang.ismy.htmlcachesystem.dao.ItemDao;
 import wang.ismy.htmlcachesystem.entity.Item;
 import wang.ismy.htmlcachesystem.service.ItemService;
 
+import java.util.List;
+
 /**
  * @author MY
  * @date 2020/7/23 13:59
@@ -67,5 +69,10 @@ public class Api {
         }else {
             return "error";
         }
+    }
+
+    @GetMapping("check")
+    public List<Item> check(){
+        return itemService.checkFile();
     }
 }
