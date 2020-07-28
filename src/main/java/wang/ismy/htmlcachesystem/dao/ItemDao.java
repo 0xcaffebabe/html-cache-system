@@ -28,4 +28,6 @@ public interface ItemDao {
     int insert(Item item);
 
     Item selectById(Long id);
+
+    int update(Item item);
 }

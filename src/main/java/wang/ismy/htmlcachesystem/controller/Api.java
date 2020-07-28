@@ -1,5 +1,6 @@
 package wang.ismy.htmlcachesystem.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,16 +15,14 @@ import wang.ismy.htmlcachesystem.service.ItemService;
  */
 @RestController
 @Slf4j
+@AllArgsConstructor
 public class Api {
 
-    @Autowired
-    ItemDao itemDao;
+    private final ItemDao itemDao;
 
-    @Autowired
-    ItemService itemService;
+    private final ItemService itemService;
 
-    @Autowired
-    ConfigDao configDao;
+    private final ConfigDao configDao;
 
     /**
      * 后台接收添加item请求接口
@@ -33,8 +32,16 @@ public class Api {
     @PostMapping("item")
     public String addItem(@RequestBody Item item){
         log.info(item.toString());
-        if (itemDao.insert(item) == 1){
+        if (itemService.insert(item) == 1){
             return item.getId().toString();
+        }
+        return "error";
+    }
+
+    @PutMapping("item")
+    public String updateItem(@RequestBody Item item){
+        if (itemService.update(item) == 1){
+            return "success";
         }
         return "error";
     }

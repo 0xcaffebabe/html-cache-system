@@ -6,6 +6,8 @@ import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import wang.ismy.htmlcachesystem.dao.ConfigDao;
@@ -73,5 +75,22 @@ public class ItemService {
             }
         }
         return items;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public int insert(Item item){
+        try {
+            int r = itemDao.insert(item);
+            generateHtml(item.getId());
+            return r;
+        }catch (Exception e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return -1;
+        }
+
+    }
+
+    public int update(Item item) {
+        return itemDao.update(item);
     }
 }

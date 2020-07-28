@@ -6,6 +6,10 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO tb_item(title,content) VALUES(#{title},#{content})
     </insert>
+    <update id="update">
+        UPDATE tb_item SET title = #{title},content=#{content}
+        WHERE id = #{id}
+    </update>
     <select id="selectAll" resultType="wang.ismy.htmlcachesystem.entity.Item">
         SELECT * FROM tb_item
     </select>
